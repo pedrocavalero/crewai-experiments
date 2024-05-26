@@ -71,7 +71,7 @@ task_report = Task(
 task_blog = Task(
     description="""Write a blog article about the latest AI tools for {company}
     with text only and with a short but impactful headline and at least 10 paragraphs. 
-    Blog should summarize the report on latest ai tools found on the internet. 
+    Blog should summarize the report created before and should not try different sources of information. 
     The title of the blog post should be engaging and compeling. 
     Style and tone should be compelling and concise, fun, technical but also use layman words for the general public. 
     The conclusion must summarize the most important points, and make sure call the user to like and comment on the blog post.
@@ -116,6 +116,7 @@ task_critique = Task(
 
     ```
     Make sure that it does and if it doesn't, rewrite it accordingly.
+    Check the links on the blog post and make sure they are the same as scraped before.
     """,
     agent=critic,
     output_file="critique.md",
@@ -127,6 +128,7 @@ crew = Crew(
     tasks=[task_report, task_blog, task_critique],
     verbose=2,
     process=Process.sequential,  # Sequential process will have tasks executed one after the other and the outcome of the previous one is passed as extra content into this next.
+    memory=True,
 )
 
 # Get your crew to work!
