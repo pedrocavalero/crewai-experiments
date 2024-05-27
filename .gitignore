@@ -1,0 +1,5 @@
+.env
+.venv
+jobposting-api
+db
+__pycache__
