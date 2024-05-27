@@ -21,7 +21,7 @@ scrape_tool = ScrapeWebsiteTool()
 explorer = Agent(
     role="Senior Technology Journalist Researcher",
     goal="""Find and explore the most exciting news, projects of {company} 
-    in the ai and machine learning space in the last week of may 2024. 
+    in the {topic} on the period of {period}. 
     You MUST find the newest and the latest news. 
     You must use the search tool to find the most exciting news and the scrape tool to scrape the data.""",
     backstory="""You are and Expert strategist that knows how to spot emerging trends and companies in AI, tech and machine learning. 
@@ -35,8 +35,8 @@ explorer = Agent(
 
 writer = Agent(
     role="Creative Content Creator",
-    goal="Write engaging and interesting blog post about latest news on AI and machine learning from the report.",
-    backstory="""You are an Expert Writer on technical innovation, especially in the field of AI and machine learning. You know how to write in 
+    goal="Write engaging and interesting blog post about latest news on {topic} from the report.",
+    backstory="""You are an Expert Writer on technical innovation, especially in the field of {topic}. You know how to write in 
     engaging, interesting but simple, straightforward and concise. You know how to present complicated technical terms to general audience in a 
     fun way by using layman words.ONLY use scraped data from the internet for the blog.""",
     verbose=True,
@@ -69,7 +69,7 @@ task_report = Task(
 )
 
 task_blog = Task(
-    description="""Write a blog article about the latest AI tools for {company}
+    description="""Write a blog article about the latest AI tools for {company} on the period of {period}
     with text only and with a short but impactful headline and at least 10 paragraphs. 
     Blog should summarize the report created before and should not try different sources of information. 
     The title of the blog post should be engaging and compeling. 
@@ -82,16 +82,16 @@ task_blog = Task(
     expected_output="""For your Outputs use the following markdown format:
     ```
     ## [Title of the blog post]
-    - [Introduction]
+    [Introduction]
     ## [Title of post](link to project)
-    - [Interesting facts]
-    - [Own thoughts on how it connects to the overall theme of the newsletter]
+    [Interesting facts]
+    [Own thoughts on how it connects to the overall theme of the newsletter]
     ## [Title of second post](link to project)
-    - [Interesting facts]
-    - [Own thoughts on how it connects to the overall theme of the newsletter]
+    [Interesting facts]
+    [Own thoughts on how it connects to the overall theme of the newsletter]
     [Similar for the rest of the posts...]
     ## Conclusion
-    - [Summarize the most important points, and make sure call the user to like and comment on the blog post.]
+    [Summarize the most important points, and make sure call the user to like and comment on the blog post.]
     ```
     """,
     agent=writer,
@@ -103,16 +103,16 @@ task_critique = Task(
     expected_output="""The Output MUST have the following markdown format:
     ```
     ## [Title of the blog post]
-    - [Introduction]
+    [Introduction]
     ## [Title of post](link to project)
-    - [Interesting facts]
-    - [Own thoughts on how it connects to the overall theme of the newsletter]
+    [Interesting facts]
+    [Own thoughts on how it connects to the overall theme of the newsletter]
     ## [Title of second post](link to project)
-    - [Interesting facts]
-    - [Own thoughts on how it connects to the overall theme of the newsletter]
+    [Interesting facts]
+    [Own thoughts on how it connects to the overall theme of the newsletter]
     [Similar for the rest of the posts...]
     ## Conclusion
-    - [Summarize the most important points, and make sure call the user to like and comment on the blog post.]
+    [Summarize the most important points, and make sure call the user to like and comment on the blog post.]
 
     ```
     Make sure that it does and if it doesn't, rewrite it accordingly.
@@ -132,7 +132,13 @@ crew = Crew(
 )
 
 # Get your crew to work!
-result = crew.kickoff(inputs={"company": "Google"})
+result = crew.kickoff(
+    inputs={
+        "company": "Microsoft",
+        "period": "last week of may 2024",
+        "topic": "AI and machine learning space",
+    }
+)
 
 print("######################")
 print(result)
